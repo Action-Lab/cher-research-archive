@@ -1,0 +1,50 @@
+body {
+  font-family: Arial;
+  margin-top: 50px;
+}
+
+a {
+  color: black;
+}
+
+.td-center {
+  text-align: center;
+}
+
+.odd td, .even td{
+  border-bottom: 1px solid black;
+}
+
+tr:last-child td {
+  border: 0;
+}
+
+#results_filter {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  color: white;
+  z-index: 999;
+}
+
+#filters {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  z-index: 999;
+  width: 100%;
+  background: black;
+  color: white;
+}
+
+.invisible {
+  display: none;
+}
+
+.emphasis {
+  font-weight: bold;
+  font-size: 1.07em;
+}
