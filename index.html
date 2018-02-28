@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Projects</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.2/tabletop.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="main.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+
+    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <form id="filters">
+      <input type="checkbox" id="arts" name="filter" value="Arts" checked>
+      <label for="arts">Arts</label>
+
+      <input type="checkbox" id="commdev" name="filter" value="Community Development" checked>
+      <label for="commdev">Community Development</label>
+
+      <input type="checkbox" id="education" name="filter" value="Education" checked>
+      <label for="education">Education</label>
+
+      <input type="checkbox" id="food" name="filter" value="Food" checked>
+      <label for="food">Food</label>
+
+      <input type="checkbox" id="health" name="filter" value="Health" checked>
+      <label for="health">Health</label>
+
+      <input type="checkbox" id="hispstu" name="filter" value="Hispanic Studies" checked>
+      <label for="hispstu">Hispanic Studies</label>
+
+      <input type="checkbox" id="housing" name="filter" value="Housing" checked>
+      <label for="housing">Housing</label>
+
+      <input type="checkbox" id="humrght" name="filter" value="Human Rights" checked>
+      <label for="humrght">Human Rights</label>
+ 
+      <input type="checkbox" id="immig" name="filter" value="Immigration" checked>
+      <label for="immig">Immigration</label>
+
+      <input type="checkbox" id="relg" name="filter" value="Religion" checked>
+      <label for="relg">Religion</label>
+
+      <input type="checkbox" id="sciences" name="filter" value="Sciences" checked>
+      <label for="sciences">Sciences</label>
+
+      <input type="checkbox" id="sust" name="filter" value="Sustainability" checked>
+      <label for="sust">Sustainability</label>
+    </form>
+
+    <table id="results" width="100%">
+    </table>
+
+  </body>
+</html>
