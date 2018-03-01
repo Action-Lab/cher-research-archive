@@ -36,7 +36,7 @@ function emailToLink(email) {
 
 function linkToAnchor(link, showErr){
   if (!link) return !!showErr ? 'Unavailable' : '';
-  return '<a href='+link+'>Google Drive Link</a> <a style="text-decoration: none;"href='+link+'<i class="fas fa-external-link-alt"></a>';
+  return '<a href='+link+'>Click to see poster</a> <a style="text-decoration: none;"href='+link+'<i class="fas fa-external-link-alt"></a>';
 }
 
 function parseRepoLink(link, showErr){
@@ -59,7 +59,6 @@ function processData(data, tabletop) {
 
   for (i in data) {
     var r = data[i];
-    console.log(r);
     //if (r.Display !== 'y') continue;
 
     // Add a row to the final dataset
@@ -107,11 +106,10 @@ function processData(data, tabletop) {
       ordering: true,
       data: processedData,
       columns: [
-        {title: 'Author', width: '120px', className: 'td-center'},
-        {title: 'Title', className: 'td-center',  orderable: false},
-        {title: 'Partner', width: '50px', orderable: false},
-        {title: 'Year', orderable: false},
-
+        {title: 'Author', width: '30px', className: 'td-center'},
+        {title: 'Title',  width: '50px'},
+        {title: 'Partner', width: '30px', className: 'td-center'},
+        {title: 'Year'},
         {title: 'Abstract', orderable: false},
         {title: 'Poster', orderable: false},
         {title: 'Repository Publication', orderable: false},

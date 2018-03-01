@@ -19,6 +19,7 @@ tr:last-child td {
   border: 0;
 }
 
+
 #results_filter {
   position: fixed;
   top: 10px;
@@ -38,6 +39,10 @@ tr:last-child td {
   width: 100%;
   background: black;
   color: white;
+}
+
+form>div{
+  display:block;
 }
 
 .invisible {
