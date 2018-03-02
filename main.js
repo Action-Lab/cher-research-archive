@@ -1,4 +1,3 @@
-//var researchArchiveURL = 'https://docs.google.com/spreadsheets/d/1p8r5qRrLbDJp1tmBXvZow9ygzn2EVv3f_m0lgONC1HE/pubhtml';
 var researchArchiveURL = 'https://docs.google.com/spreadsheets/d/1ianZrHebWkj2aKhOhkRbsk5p_4BvL__aImo6iuvADh4/pubhtml';
 
 Tabletop.init({
@@ -7,6 +6,7 @@ Tabletop.init({
   simpleSheet: true,
 });
 
+/* functionality authored by Ilya. Probably won't need this for this project.
 function mergeNameAndWebsite(name, website) {
   if (!website) { return name; }
   return '<span class="invisible">' + name + '</span>'
@@ -28,29 +28,44 @@ function mergeTitleResearchNeeds(title, research, needs) {
   return res;
 }
 
-
 function emailToLink(email) {
   if (!email) { return ''; }
-  return ' <a href="mailto:' + email + '"><i class="fa fa-envelope"> </a>'
+  return '<a target="_blank" href="mailto:' + email + '"><i class="fa fa-envelope"></i> </a>'
+}
+*/
+
+function formatPosterURL(url, showErr){
+  if (!url) return !!showErr ? 'Unavailable' : '';
+  return '<a target="_blank" href='+url+'>Click to see poster</a> <a style="text-decoration: none;"href='+url+'><i class="fas fa-external-link-alt"></i></a>';
 }
 
-function linkToAnchor(link, showErr){
-  if (!link) return !!showErr ? 'Unavailable' : '';
-  return '<a href='+link+'>Click to see poster</a> <a style="text-decoration: none;"href='+link+'<i class="fas fa-external-link-alt"></a>';
+function mergeAbstractAndRepoURL(a, r){
+  abs = !!a ? "<p>"+a+"</p>" : '<p>Unavailable</p>';
+  pub = !!r ? '<p>Associated Theses:<br/>'+ formatRepoURL(r) + '</p>' : '';
+  return abs + pub;
 }
 
-function parseRepoLink(link, showErr){
-  if (!link) return !!showErr ? 'Unavailable' : '';
-  if (!~link.indexOf(';'))
-    return '<a href='+link+'>'+link+'</a> <a style="text-decoration: none;" href='+link+'<i class="fas fa-external-link-alt"></a>';
+function formatRepoURL(url, showErr){
+  if (!url) return !!showErr ? 'Unavailable' : '';
+  Head = '<a target="_blank" href=';
+  Mid = '</a> <a style="text-decoration: none;" href="';
+  Tail = '"><i class="fas fa-external-link-alt"></i></a>';
+  // handles only one link
+  if (!~url.indexOf(';'))
+    return Head + url + '>' + url + Mid + url + Tail;
+  // handles multiple comma-separated links
   tagToReturn ='';
-  Head = '<a href=';
-  Mid = '</a> <a style="text-decoration: none;" href=';
-  Tail = '<i class="fas fa-external-link-alt"></a>';
-  link.split(';').forEach(function (l){tagToReturn += Head+link+'>'+l+Mid+link+Tail+"<br/>";});
+  url.split(';').forEach(function (l){l=l.trim();tagToReturn += Head+l+'>'+l+Mid+l+Tail+"<br/>";});
+  console.log(tagToReturn);
   return tagToReturn;
 }
 
+/*
+ * Reformat year from say, 2018-2019, to 2018-19
+ */
+function reformatYear(year){
+  return /^\d{4}-\d{4}$/.test(year) ? year.slice(0,5)+year.slice(7,9) : year;
+}
 
 function processData(data, tabletop) {
   if (!data[0]) return;
@@ -66,10 +81,10 @@ function processData(data, tabletop) {
       r.Author,
       r["Title "] || "Unavailable",
       r.Partner,
-      r.Year,
-      r.Abstract || 'Unavailable',
-      linkToAnchor(r.Poster, 1),
-      parseRepoLink(r.Repository, 1),
+      reformatYear(r.Year),
+      mergeAbstractAndRepoURL(r.Abstract, r.Repository),
+      formatPosterURL(r.Poster,"poster", 1),
+      //linkToAnchor(r.Repository, "publication", 1),
     ]);
   }
 
@@ -106,13 +121,13 @@ function processData(data, tabletop) {
       ordering: true,
       data: processedData,
       columns: [
-        {title: 'Author', width: '30px', className: 'td-center'},
-        {title: 'Title',  width: '50px'},
+        {title: 'Author', width: '20px'},
+        {title: 'Title',  width: '200px'},
         {title: 'Partner', width: '30px', className: 'td-center'},
-        {title: 'Year'},
+        {title: 'Year', width:'45px'},
         {title: 'Abstract', orderable: false},
         {title: 'Poster', orderable: false},
-        {title: 'Repository Publication', orderable: false},
+        //{title: 'Repository Publication', orderable: false},
       ]
     });
 
