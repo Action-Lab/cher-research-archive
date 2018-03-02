@@ -34,16 +34,19 @@ function emailToLink(email) {
 }
 */
 
-function formatPosterURL(url, showErr){
-  if (!url) return !!showErr ? 'Unavailable' : '';
-  return '<a target="_blank" href='+url+'>Click to see poster</a> <a style="text-decoration: none;"href='+url+'><i class="fas fa-external-link-alt"></i></a>';
-}
-
-function mergeAbstractAndRepoURL(a, r){
+function unifyDescription(t, a, r, p){
+  title = !!t ? "<h4>"+t+"</h4>" : '';
   abs = !!a ? "<p>"+a+"</p>" : '<p>Unavailable</p>';
   pub = !!r ? '<p>Associated Theses:<br/>'+ formatRepoURL(r) + '</p>' : '';
-  return abs + pub;
+  pos = formatPosterURL(p);
+  return title + abs + pub + pos;
 }
+
+function formatPosterURL(url, showErr){
+  if (!url) return !!showErr ? 'Unavailable' : '';
+  return '<p>Associated Poster:<br/><a target="_blank" href='+url+'>Click to see poster</a> <a style="text-decoration: none;"href='+url+'><i class="fas fa-external-link-alt"></i></a></p>';
+}
+
 
 function formatRepoURL(url, showErr){
   if (!url) return !!showErr ? 'Unavailable' : '';
@@ -56,7 +59,6 @@ function formatRepoURL(url, showErr){
   // handles multiple comma-separated links
   tagToReturn ='';
   url.split(';').forEach(function (l){l=l.trim();tagToReturn += Head+l+'>'+l+Mid+l+Tail+"<br/>";});
-  console.log(tagToReturn);
   return tagToReturn;
 }
 
@@ -79,11 +81,11 @@ function processData(data, tabletop) {
     // Add a row to the final dataset
     processedData.push([
       r.Author,
-      r["Title "] || "Unavailable",
+      //r["Title "] || "Unavailable",
       r.Partner,
       reformatYear(r.Year),
-      mergeAbstractAndRepoURL(r.Abstract, r.Repository),
-      formatPosterURL(r.Poster,"poster", 1),
+      unifyDescription(r["Title "], r.Abstract, r.Repository, r.Poster),
+      //formatPosterURL(r.Poster,"poster", 1),
       //linkToAnchor(r.Repository, "publication", 1),
     ]);
   }
@@ -122,11 +124,11 @@ function processData(data, tabletop) {
       data: processedData,
       columns: [
         {title: 'Author', width: '20px'},
-        {title: 'Title',  width: '200px'},
+        //{title: 'Title',  width: '200px'},
         {title: 'Partner', width: '30px', className: 'td-center'},
         {title: 'Year', width:'45px'},
         {title: 'Abstract', orderable: false},
-        {title: 'Poster', orderable: false},
+        //{title: 'Poster', orderable: false},
         //{title: 'Repository Publication', orderable: false},
       ]
     });
