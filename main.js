@@ -76,14 +76,14 @@ function processData(data, tabletop) {
 
   for (i in data) {
     var r = data[i];
-    //if (r.Display !== 'y') continue;
+    if (!!!r["Title "]) continue;
 
     // Add a row to the final dataset
     processedData.push([
+      reformatYear(r.Year),
       r.Author,
       //r["Title "] || "Unavailable",
       r.Partner,
-      reformatYear(r.Year),
       unifyDescription(r["Title "], r.Abstract, r.Repository, r.Poster),
       //formatPosterURL(r.Poster,"poster", 1),
       //linkToAnchor(r.Repository, "publication", 1),
@@ -123,11 +123,11 @@ function processData(data, tabletop) {
       ordering: true,
       data: processedData,
       columns: [
+        {title: 'Year', width:'45px'},
         {title: 'Author', width: '20px'},
         //{title: 'Title',  width: '200px'},
-        {title: 'Partner', width: '30px', className: 'td-center'},
-        {title: 'Year', width:'45px'},
-        {title: 'Abstract', orderable: false},
+        {title: 'Partner', width: '30px'},
+        {title: 'Report', orderable: false},
         //{title: 'Poster', orderable: false},
         //{title: 'Repository Publication', orderable: false},
       ]
