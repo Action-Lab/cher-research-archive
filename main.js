@@ -1,5 +1,7 @@
 var researchArchiveURL = 'https://docs.google.com/spreadsheets/d/1ianZrHebWkj2aKhOhkRbsk5p_4BvL__aImo6iuvADh4/pubhtml';
 
+// Sort by reverse chronology
+
 Tabletop.init({
   key: researchArchiveURL,
   callback: processData,
@@ -36,7 +38,7 @@ function emailToLink(email) {
 
 function unifyDescription(t, a, r, p){
   title = !!t ? "<h4>"+t+"</h4>" : '';
-  abs = !!a ? "<p>"+a+"</p>" : '<p>Unavailable</p>';
+  abs = !!a ? "<p>Abstract:<br/>"+a+"</p>" : '<p>Unavailable</p>';
   pub = !!r ? '<p>Associated Theses:<br/>'+ formatRepoURL(r) + '</p>' : '';
   pos = formatPosterURL(p);
   return title + abs + pub + pos;
@@ -127,7 +129,7 @@ function processData(data, tabletop) {
         {title: 'Author', width: '20px'},
         //{title: 'Title',  width: '200px'},
         {title: 'Partner', width: '30px'},
-        {title: 'Report', orderable: false},
+        {title: 'Project', orderable: false},
         //{title: 'Poster', orderable: false},
         //{title: 'Repository Publication', orderable: false},
       ]
