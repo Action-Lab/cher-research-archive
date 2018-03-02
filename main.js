@@ -39,28 +39,30 @@ function emailToLink(email) {
 function unifyDescription(t, a, r, p){
   title = !!t ? "<h4>"+t+"</h4>" : '';
   abs = !!a ? "<p>Abstract:<br/>"+a+"</p>" : '<p>Unavailable</p>';
-  pub = !!r ? '<p>Associated Theses:<br/>'+ formatRepoURL(r) + '</p>' : '';
+  pub = formatRepoURL(r);
   pos = formatPosterURL(p);
   return title + abs + pub + pos;
 }
 
 function formatPosterURL(url, showErr){
   if (!url) return !!showErr ? 'Unavailable' : '';
-  return '<p>Associated Poster:<br/><a target="_blank" href='+url+'>Click to see poster</a> <a style="text-decoration: none;"href='+url+'><i class="fas fa-external-link-alt"></i></a></p>';
+  return '<p><a target="_blank" href='+url+'>Click to see poster</a> <a style="text-decoration: none;"href='+url+'><i class="fas fa-external-link-alt"></i></a></p>';
 }
 
 
 function formatRepoURL(url, showErr){
   if (!url) return !!showErr ? 'Unavailable' : '';
+  Meta = ['<p>Associated Thesis:<br/>', '<p>Associated Theses:<br/>']
   Head = '<a target="_blank" href=';
   Mid = '</a> <a style="text-decoration: none;" href="';
   Tail = '"><i class="fas fa-external-link-alt"></i></a>';
   // handles only one link
   if (!~url.indexOf(';'))
-    return Head + url + '>' + url + Mid + url + Tail;
+    return Meta[0] + Head + url + '>' + url + Mid + url + Tail + '</p>';
   // handles multiple comma-separated links
-  tagToReturn ='';
+  tagToReturn =Meta[1];
   url.split(';').forEach(function (l){l=l.trim();tagToReturn += Head+l+'>'+l+Mid+l+Tail+"<br/>";});
+  tagToReturn += '</p>';
   return tagToReturn;
 }
 
