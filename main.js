@@ -8,34 +8,6 @@ Tabletop.init({
   simpleSheet: true,
 });
 
-/* functionality authored by Ilya. Probably won't need this for this project.
-function mergeNameAndWebsite(name, website) {
-  if (!website) { return name; }
-  return '<span class="invisible">' + name + '</span>'
-    + '<a target="_blank" href="http://' + website + '">' + name + '</a>';
-}
-
-function mergeTitleResearchNeeds(title, research, needs) {
-  res = '';
-  if (title) {
-    res += '<h3>' + title + '</h3>';
-  }
-
-  res += '<p><span class="emphasis">Research Project: </span>' + research + '</p>';
-
-  if (needs) {
-    res += '<p><span class="emphasis">Student Researchers: </span>' + needs + '</p>';
-  }
-
-  return res;
-}
-
-function emailToLink(email) {
-  if (!email) { return ''; }
-  return '<a target="_blank" href="mailto:' + email + '"><i class="fa fa-envelope"></i> </a>'
-}
-*/
-
 function unifyDescription(t, a, r, p){
   title = !!t ? "<h4>"+t+"</h4>" : '';
   abs = !!a ? "<p>Abstract:<br/>"+a+"</p>" : '<p>Unavailable</p>';
@@ -87,12 +59,12 @@ function processData(data, tabletop) {
       reformatYear(r.Year),
       r.Author,
       r.Partner,
+      r.Subjects,
       unifyDescription(r["Title "], r.Abstract, r.Repository, r.Poster),
     ]);
   }
 
   // Adding custom filtering
-  /*
   $.fn.dataTable.ext.search.push(
     function(settings, data, dataIndex) {
 
@@ -104,7 +76,7 @@ function processData(data, tabletop) {
         showOnly[this.value] = 1;
       });
 
-      var divisions = data[2].split(',').map(function(x) {return x.trim()});
+      var divisions = data[3].split(';').map(function(x) {return x.trim()});
 
       for (i in divisions) {
         if (showOnly[divisions[i]] === 1) {
@@ -114,7 +86,6 @@ function processData(data, tabletop) {
       return false;
     }
   );
-  */
 
 
   $(document).ready(function() {
@@ -127,11 +98,12 @@ function processData(data, tabletop) {
         {title: 'Year', width:'45px'},
         {title: 'Author', width: '20px'},
         {title: 'Partner', width: '30px'},
+        {title: 'Subjects', width: '20px'},
         {title: 'Project', orderable: false},
       ]
     });
 
-    $('input[name="filter"]').change(function() {
+    $('#filtersCheckboxes>input').change(function() {
       table.draw();
     });
 

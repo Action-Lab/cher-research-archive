@@ -23,7 +23,7 @@ tr:last-child td {
   top: 0;
   left: 0;
   position: fixed;
-  height: 80px;
+  height: 90px;
   z-index: 800;
   background: white;
   width: 100%;
@@ -38,6 +38,12 @@ tr:last-child td {
 
 h1 {
   margin-left: 10px;
+  margin-bottom:0;
+}
+
+h3 {
+  margin-top:0px;
+  margin-bottom:3px;
 }
 
 #results_filter {
