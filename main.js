@@ -86,11 +86,8 @@ function processData(data, tabletop) {
     processedData.push([
       reformatYear(r.Year),
       r.Author,
-      //r["Title "] || "Unavailable",
       r.Partner,
       unifyDescription(r["Title "], r.Abstract, r.Repository, r.Poster),
-      //formatPosterURL(r.Poster,"poster", 1),
-      //linkToAnchor(r.Repository, "publication", 1),
     ]);
   }
 
@@ -129,11 +126,8 @@ function processData(data, tabletop) {
       columns: [
         {title: 'Year', width:'45px'},
         {title: 'Author', width: '20px'},
-        //{title: 'Title',  width: '200px'},
         {title: 'Partner', width: '30px'},
         {title: 'Project', orderable: false},
-        //{title: 'Poster', orderable: false},
-        //{title: 'Repository Publication', orderable: false},
       ]
     });
 
@@ -143,29 +137,35 @@ function processData(data, tabletop) {
 
   });
 
+  // List of checkboxes to be added to the Topics list
   var filters = [
-    ['Arts', 'Art'],
-    ['Community Development', 'Comm.Devel.'],
-    ['Education', 'Edu'],
-    ['Environment', 'Env'],
-    ['Food', 'Food'],
-    ['Health', 'Health'],
-    ['Hispanic Studies', 'Hisp.Stu.'],
-    ['Housing', 'Housing'],
-    ['Human Rights', 'Hum.Rghts.'],
-    ['Immigration', 'Immig.'],
-    ['Religion', 'Relg.'],
-    ['Science', 'Sci'],
-    ['Sustainability', 'Sust.'],
-  ]
+    'Arts',
+    'Community Development',
+    'Education',
+    'Environment',
+    'Food',
+    'Health',
+    'Hispanic Studies',
+    'Housing',
+    'Human Rights',
+    'Immigration',
+    'Religion',
+    'Science',
+    'Sustainability',
+  ].map(function(x) {
+    var name = x.split(' ')[0].toLowerCase();
+    $('#filtersCheckboxes').append('<input type="checkbox" \
+      id="' + name + '" name="' + name + '" value="' + x + '" checked>\
+      <label for="' + name + '">' + x + '</label><br>');
+  });
 
-  function renameCheckboxes() {
-    var shorten = $(window).width() < 900 ? 1 : 0;
-    $('#filters label').each(function(i) {
-      $(this).text(filters[i][shorten])
-    });
-  }
 
-  $(window).resize(renameCheckboxes);
-  renameCheckboxes();
+  $('#filtersButton').click(function() {
+    if ( $('#filtersCheckboxes').hasClass('invisible') ) {
+      $('#filtersCheckboxes').removeClass('invisible').addClass('visible');
+    } else {
+      $('#filtersCheckboxes').removeClass('visible').addClass('invisible');
+    }
+  });
+
 }

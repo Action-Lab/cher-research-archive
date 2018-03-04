@@ -1,6 +1,6 @@
 body {
   font-family: Arial;
-  margin-top: 50px;
+  margin-top: 150px;
 }
 
 a {
@@ -19,19 +19,36 @@ tr:last-child td {
   border: 0;
 }
 
+#header {
+  top: 0;
+  left: 0;
+  position: fixed;
+  height: 80px;
+  z-index: 800;
+  background: white;
+  width: 100%;
+}
+
+#header img {
+  width: 60px;
+  height: 60px;
+  float: left;
+  margin: 10px;
+}
+
+h1 {
+  margin-left: 10px;
+}
 
 #results_filter {
   position: fixed;
-  top: 10px;
+  top: 94px;
   right: 10px;
   color: white;
   z-index: 999;
 }
 
 #filters {
-  position: fixed;
-  top: 0;
-  left: 0;
   padding-top: 10px;
   padding-left: 10px;
   padding-bottom: 10px;
@@ -41,8 +58,29 @@ tr:last-child td {
   color: white;
 }
 
+#filtersButton {
+  border: 1px solid white;
+  border-radius: 3px;
+  width: 70px;
+  padding: 3px 10px;
+}
+
+#filtersButton:hover {
+  background: white;
+  color: black;
+  cursor: pointer;
+}
+
+#filtersCheckboxes {
+  margin-top: 12px;
+}
+
 form>div{
   display:block;
+}
+
+.visible {
+  display: block;
 }
 
 .invisible {
