@@ -4,6 +4,7 @@ var researchArchiveURL = 'https://docs.google.com/spreadsheets/d/1ianZrHebWkj2aK
 
 Tabletop.init({
   key: researchArchiveURL,
+  reverse: true,
   callback: processData,
   simpleSheet: true,
 });
@@ -100,7 +101,8 @@ function processData(data, tabletop) {
         {title: 'Partner', width: '30px'},
         {title: 'Subjects', width: '20px'},
         {title: 'Project', orderable: false},
-      ]
+      ],
+      "order": [[0, "desc"]]
     });
 
     $('#filtersCheckboxes>input').change(function() {
