@@ -46,13 +46,13 @@ function unifyDescription(t, a, r, p){
 
 function formatPosterURL(url, showErr){
   if (!url) return !!showErr ? 'Unavailable' : '';
-  return '<p><a target="_blank" href='+url+'>Click to see poster</a> <a style="text-decoration: none;"href='+url+'><i class="fas fa-external-link-alt"></i></a></p>';
+  return '<p><a target="_blank" href='+url+'>View poster</a> <a style="text-decoration: none;"href='+url+'><i class="fas fa-external-link-alt"></i></a></p>';
 }
 
 
 function formatRepoURL(url, showErr){
   if (!url) return !!showErr ? 'Unavailable' : '';
-  Meta = ['<p>See Thesis:<br/>', '<p>See Theses:<br/>']
+  Meta = ['<p>View Thesis:<br/>', '<p>View Theses:<br/>']
   Head = '<a target="_blank" href=';
   Mid = '</a> <a style="text-decoration: none;" href="';
   Tail = '"><i class="fas fa-external-link-alt"></i></a>';
