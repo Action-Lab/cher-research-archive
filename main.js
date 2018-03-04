@@ -52,7 +52,7 @@ function formatPosterURL(url, showErr){
 
 function formatRepoURL(url, showErr){
   if (!url) return !!showErr ? 'Unavailable' : '';
-  Meta = ['<p>Associated Thesis:<br/>', '<p>Associated Theses:<br/>']
+  Meta = ['<p>See Thesis:<br/>', '<p>See Theses:<br/>']
   Head = '<a target="_blank" href=';
   Mid = '</a> <a style="text-decoration: none;" href="';
   Tail = '"><i class="fas fa-external-link-alt"></i></a>';
