@@ -37,13 +37,15 @@ tr:last-child td {
 }
 
 h1 {
-  margin-left: 10px;
-  margin-bottom:0;
+  margin: 10px 0 0 10px;
 }
 
 h3 {
-  margin-top:0px;
-  margin-bottom:3px;
+  margin: 0 0 11px 0;
+}
+
+h3 a {
+  color: #004887;
 }
 
 #results_filter {
@@ -67,7 +69,7 @@ h3 {
 #filtersButton {
   border: 1px solid white;
   border-radius: 3px;
-  width: 70px;
+  width: 85px;
   padding: 3px 10px;
 }
 
@@ -81,8 +83,17 @@ h3 {
   margin-top: 12px;
 }
 
-form>div{
-  display:block;
+#filterHelpers {
+  font-size: 0.9em;
+  margin: 5px 0;
+}
+
+#filterHelpers a {
+  color: white;
+}
+
+form > div{
+  display: block;
 }
 
 .visible {
