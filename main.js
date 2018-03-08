@@ -65,6 +65,7 @@ $(document).ready(function() {
       info: false,
       ordering: true,
       data: processedData,
+      searchHighlight: true, // this relies on highlight jQuery plugin, as well as DataTables Highlight plugin
       columns: [
         {title: 'Year', width: '45px'},
         {title: 'Author', width: '20px'},

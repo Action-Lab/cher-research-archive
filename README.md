@@ -17,6 +17,8 @@ Updated by Zorawar Moolenaar ([@zorawar87](https://github.com/zorawar87)) on 201
 
 ## Dependencies ##
 * [Tabletop v1.5.2](https://github.com/jsoma/tabletop)
-* [jQIuery v3.2.1](https://jquery.com/)
+* [jQuery v3.2.1](https://jquery.com/)
+* [jQuery Highlight plugin](https://github.com/bartaz/sandbox.js)
 * [DataTables v1.10.16](https://www.datatables.net/)
+* [DataTables Highlight plugin](https://github.com/DataTables/Plugins/tree/master/features/searchHighlight)
 * [Font-Awesome v5.0.7](https://fontawesome.com/)
