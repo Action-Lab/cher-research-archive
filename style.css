@@ -7,6 +7,15 @@ a {
   color: black;
 }
 
+a .fa-external-link-alt {
+  color: #444;
+  margin-left: 5px;
+}
+
+h4 {
+  margin-bottom: 0;
+}
+
 .td-center {
   text-align: center;
 }
@@ -80,12 +89,18 @@ h3 a {
 }
 
 #filtersCheckboxes {
-  margin-top: 12px;
+  padding-top: 12px;
+}
+
+#spinner {
+  text-align: center;
+  font-size: 5em;
+  color: #ffcd00;
 }
 
 #filterHelpers {
   font-size: 0.9em;
-  margin: 5px 0;
+  padding: 5px 0;
 }
 
 #filterHelpers a {
@@ -107,4 +122,9 @@ form > div{
 .emphasis {
   font-weight: bold;
   font-size: 1.07em;
+}
+
+select {
+  width: 150px;
+  margin-left: 10px;
 }

@@ -1,31 +1,33 @@
 var researchArchiveURL = 'https://docs.google.com/spreadsheets/d/1ianZrHebWkj2aKhOhkRbsk5p_4BvL__aImo6iuvADh4/pubhtml';
 
-function unifyDescription(t, a, r, p) {
-  title = !!t ? "<h4>"+t+"</h4>" : '';
-  abs = !!a ? "<p>Abstract:<br/>"+a+"</p>" : '<p>Unavailable</p>';
+function unifyDescription(t, ty, a, r, p) {
+  title = !!t ? '<h4>'+t+'</h4>' : '';
+  ty = '<span class="research-type">' + ty + '</span>';
+  abs = !!a ? "<p><b>Abstract:</b><br/>"+a+"</p>" : '<p>Unavailable</p>';
   pub = formatRepoURL(r);
   pos = formatPosterURL(p);
-  return title + abs + pub + pos;
+  return title + ty + abs + pub + pos;
 }
 
 function formatPosterURL(url, showErr) {
   if (!url) return !!showErr ? 'Unavailable' : '';
-  return '<p><a target="_blank" href='+url+'>View poster</a> <a style="text-decoration: none;"href='+url+'><i class="fas fa-external-link-alt"></i></a></p>';
+  return '<p><a target="_blank" href='+url+'>View poster<i class="fas fa-external-link-alt"></i></a></p>';
 }
 
 function formatRepoURL(url, showErr) {
   if (!url) return !!showErr ? 'Unavailable' : '';
-  Meta = ['<p>View Thesis:<br/>', '<p>View Theses:<br/>']
-  Head = '<a target="_blank" href=';
-  Mid = '</a> <a style="text-decoration: none;" href="';
-  Tail = '"><i class="fas fa-external-link-alt"></i></a>';
-  // handles only one link
-  if (!~url.indexOf(';'))
-    return Meta[0] + Head + url + '>' + url + Mid + url + Tail + '</p>';
-  // handles multiple comma-separated links
-  tagToReturn =Meta[1];
-  url.split(';').forEach(function (l){l=l.trim();tagToReturn += Head+l+'>'+l+Mid+l+Tail+"<br/>";});
+
+  tagToReturn = '<p>View Online:';
+
+  url.split(';').forEach(function(l) {
+    l = l.trim();
+    tagToReturn +=
+      '<br><a target="_blank" href=' + l + '>' + l
+        + '<i class="fas fa-external-link-alt"></i></a>';
+  });
+
   tagToReturn += '</p>';
+
   return tagToReturn;
 }
 
@@ -55,11 +57,13 @@ $(document).ready(function() {
         r.Author,
         r.Partner,
         r.Subjects,
-        unifyDescription(r['Title'], r.Abstract, r.Repository, r.Poster),
+        unifyDescription(r.Title, r.Type, r.Abstract, r.Online, r.Poster),
+        r.Type, // for the invisible column
       ]);
     }
 
     // Transform <table> element into fancy DataTables element
+    $('#spinner').css('display', 'none');
     table = $('#results').DataTable({
       paging: false,
       info: false,
@@ -68,12 +72,36 @@ $(document).ready(function() {
       searchHighlight: true, // this relies on highlight jQuery plugin, as well as DataTables Highlight plugin
       columns: [
         {title: 'Year', width: '45px'},
-        {title: 'Author', width: '20px'},
+        {title: 'Author(s)', width: '20px'},
         {title: 'Partner', width: '30px'},
         {title: 'Subjects', width: '20px'},
         {title: 'Project', orderable: false},
+        {title: 'Type', visible: false}
       ],
-      "order": [[0, "desc"]]
+      "order": [[0, "desc"]],
+
+      // Add dropdown filter by Research Type
+      initComplete: function () {
+          this.api().columns([5]).every( function () {
+            var column = this;
+            var select = $('<select><option value="">Project Type</option></select>')
+              .appendTo( $(this.columns([4]).header()) )
+              .on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex(
+                  $(this).val()
+                );
+
+                column
+                  .search( val ? '^'+val+'$' : '', true, false )
+                  .draw();
+              });
+            column.data().unique().sort().each( function (d, j) {
+              d == '' ? false : select.append( '<option value="'+d+'">'+d+'</option>' );
+            });
+          });
+        }
+
+
     });
   }
 
@@ -131,8 +159,16 @@ $(document).ready(function() {
     'simpleSheet': true,
   });
 
-  // Open and close the dropdown menu with checkboxes on Subjects button click
-  $('#filtersButton').click(function() {
+  // Open filter dropdown menu on hover
+  /*$('#filtersButton').hover(function() {
+    if ( $('#filtersCheckboxes').hasClass('invisible') ) {
+      $('#filtersCheckboxes, #filterHelpers').removeClass('invisible').addClass('visible');
+    } else {
+      $('#filtersCheckboxes, #filterHelpers').removeClass('visible').addClass('invisible');
+    }
+  }); */
+
+  $('#filtersButton, #filtersCheckboxes, #filterHelpers').hover(function() {
     if ( $('#filtersCheckboxes').hasClass('invisible') ) {
       $('#filtersCheckboxes, #filterHelpers').removeClass('invisible').addClass('visible');
     } else {
