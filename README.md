@@ -20,8 +20,9 @@ https://cher.trincoll.edu/research-archive/
 - Subjects (separate entries with semi-colons; try to be consistent with existing labels, which are listed in Subjects button in public web page. New subjects can be added, since this button auto-populates from this data column)
 - Online (paste web link if research products are on the public web, such as Action Lab sub-site, or paper uploaded to Trinity Library Digital Repository, which students do if their work also is a senior research project)
 - Poster (for CL RFellows: name poster in this format (Lastname Year.PDF), upload to Google Drive posters subfolder [or start a new subfolder], right-click Get Shareable Link, and paste link into column)
+- NOTE: Each entry can have BOTH online links AND poster links.
 - Ignore other columns (labeled “not used”) because they do not appear on the public web site.
-- NOTE: Entries can have BOTH an online link AND a poster link, but only one author/title/year. 
+- When you finish data entry, check the public website to make sure it displays properly
 
 ## Requirements
 - data in Google Sheets, which must be published. Insert URLs in main.js
