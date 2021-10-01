@@ -1,21 +1,49 @@
-var researchArchiveURL = 'https://docs.google.com/spreadsheets/d/1ianZrHebWkj2aKhOhkRbsk5p_4BvL__aImo6iuvADh4/pubhtml';
+// Link to the Google Sheets with data
+// Needs to be published to the web as a CSV
+var researchArchiveURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTXUGmvoyLVXl9niXmDIYAX51eeDvpsYdFQn5flNgciPGtCozSESCVA43WqQCXI3K0gx4cRQfQV11xn/pub?gid=0&single=true&output=csv';
 
+
+/*
+ * Returns a single HTML block for all project description
+ * elements combined
+ */
 function unifyDescription(t, ty, a, r, p) {
-  title = !!t ? '<h4>'+t+'</h4>' : '';
-  ty = '<span class="research-type">' + ty + '</span>';
-  abs = !!a ? "<p><b>Abstract:</b><br/>"+a+"</p>" : '<p>Unavailable</p>';
-  pub = formatRepoURL(r);
-  pos = formatPosterURL(p);
+
+  // Project title
+  var title = !!t ? '<h4>'+t+'</h4>' : '';
+
+  // Project type
+  var ty = '<span class="research-type">' + ty + '</span>';
+
+  // Project abstract
+  var abs = !!a ? "<p><b>Abstract:</b><br/>"+a+"</p>" : '<p>Unavailable</p>';
+
+  // Project weblinks (can be more than one)
+  var pub = formatRepoURL(r);
+
+  // Poster weblink (only one)
+  var pos = formatPosterURL(p);
+
   return title + ty + abs + pub + pos;
 }
 
-function formatPosterURL(url, showErr) {
-  if (!url) return !!showErr ? 'Unavailable' : '';
-  return '<p><a target="_blank" href='+url+'>View poster<i class="fas fa-external-link-alt"></i></a></p>';
+
+/*
+ * Returns HTML code for poster URL
+ */
+function formatPosterURL(url) {
+  return !url
+    ? 'Unavailable'
+    : '<p><a target="_blank" href='+url+'>\
+      View poster<i class="fas fa-external-link-alt"></i></a></p>';
 }
 
-function formatRepoURL(url, showErr) {
-  if (!url) return !!showErr ? 'Unavailable' : '';
+
+/*
+ * Returns HTML code for repository URLs (multiple if separated by `;`)
+ */
+function formatRepoURL(url) {
+  if (!url) return 'Unavailable';
 
   tagToReturn = '<p>View Online:';
 
@@ -31,20 +59,24 @@ function formatRepoURL(url, showErr) {
   return tagToReturn;
 }
 
+
 /*
- * Reformat year from say, 2018-2019, to 2018-19
+ * Reformats year from YYYY-YYYY to YYYY-YY
+ * e.g. 2021-2022 becomes 2021-22
  */
 function reformatYear(year) {
   return /^\d{4}-\d{4}$/.test(year) ? year.slice(0,5)+year.slice(7,9) : year;
 }
 
 
+// Global variable for the DataTables table
 var table;
+
 
 $(document).ready(function() {
   var processedData = [];
 
-  function processData(data, tabletop) {
+  function processData(data) {
     if (!data[0]) return;
 
     for (i in data) {
@@ -58,7 +90,7 @@ $(document).ready(function() {
         r.Partner,
         r.Subjects,
         unifyDescription(r.Title, r.Type, r.Abstract, r.Online, r.Poster),
-        r.Type, // for the invisible column
+        r.Type, // for the invisible column = Project dropdown filter
       ]);
     }
 
@@ -120,8 +152,10 @@ $(document).ready(function() {
     'Religion',
     'Science',
     'Sustainability',
-  ].map(function(x) {
-    // Creating checkboxes in DOM
+  ]
+  
+  // For each filter, add checkbox
+  filters.map(function(x) {
     var name = x.split(' ')[0].toLowerCase();
     $('#filtersCheckboxes').append('<input type="checkbox" \
       id="' + name + '" name="' + name + '" value="' + x + '" checked>\
@@ -152,22 +186,18 @@ $(document).ready(function() {
     }
   );
 
-  // Initialize Tabletop
-  Tabletop.init({
-    'key': researchArchiveURL,
-    'callback': processData,
-    'simpleSheet': true,
+
+  // Fetch Google Sheets published as CSV using PapaParse
+  Papa.parse(researchArchiveURL, {
+    download: true,
+    header: true,
+    complete: function(result) {
+      processData(result.data);
+    }
   });
 
-  // Open filter dropdown menu on hover
-  /*$('#filtersButton').hover(function() {
-    if ( $('#filtersCheckboxes').hasClass('invisible') ) {
-      $('#filtersCheckboxes, #filterHelpers').removeClass('invisible').addClass('visible');
-    } else {
-      $('#filtersCheckboxes, #filterHelpers').removeClass('visible').addClass('invisible');
-    }
-  }); */
 
+  // Enable filter dropdown
   $('#filtersButton, #filtersCheckboxes, #filterHelpers').hover(function() {
     if ( $('#filtersCheckboxes').hasClass('invisible') ) {
       $('#filtersCheckboxes, #filterHelpers').removeClass('invisible').addClass('visible');
