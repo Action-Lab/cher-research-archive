@@ -2,6 +2,10 @@
 Displays Google Sheet data in a searchable, filterable, and sortable manner.
 
 ## Live website
+https://action-lab.github.io/research-archive/
+
+or see code manually pasted into:
+
 https://cher.trincoll.edu/research-archive/
 
 ## Data on Google Drive
@@ -36,7 +40,7 @@ https://cher.trincoll.edu/research-archive/
 Created by Ilya Ilyankou ([@ilyankou](https://github.com/ilyankou)) with Zorawar Moolenaar ([@zorawar87](https://github.com/zorawar87)) for the Center for Hartford Engagement and Research (CHER) at Trinity College, Hartford CT (http://cher.trincoll.edu)
 
 ## Dependencies
-* [Tabletop v1.5.2](https://github.com/jsoma/tabletop)
+* [Papa Parse v5](https://www.papaparse.com)
 * [jQuery v3.2.1](https://jquery.com/)
 * [jQuery Highlight plugin](https://github.com/bartaz/sandbox.js)
 * [DataTables v1.10.16](https://www.datatables.net/)
